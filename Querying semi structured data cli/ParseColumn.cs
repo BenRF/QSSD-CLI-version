@@ -15,14 +15,14 @@ namespace Querying_semi_structured_data_cli {
         //private Expression format;
         private ArrayList errors;
 
-        ParseColumn(String name, int id) {
+        public ParseColumn(String name, int id) {
             this.name = name;
             this.id = id;
             content = new ArrayList();
             errors = new ArrayList();
         }
 
-        ParseColumn(ParseColumn column, int id) {
+        public ParseColumn(ParseColumn column, int id) {
             name = column.name;
             this.id = id;
             content = new ArrayList(column.content);
@@ -45,21 +45,21 @@ namespace Querying_semi_structured_data_cli {
             empty = column.empty;
         }
 
-        void AddContent(Object o) {
+        public void AddContent(Object o) {
             content.Add(o);
         }
 
-        void Normalise(int newSize) {
+        public void Normalise(int newSize) {
             while (content.Count < newSize) {
                 AddContent(null);
             }
         }
 
-        void Set(int rowNum, Object newObj) {
+        public void Set(int rowNum, Object newObj) {
             content[rowNum] = newObj;
         }
 
-        void PerformChecks() {
+        public void PerformChecks() {
             IsEmpty();
             if (!empty) {
                 //this.findExpressions();
@@ -168,11 +168,11 @@ namespace Querying_semi_structured_data_cli {
             return name;
         }
 
-        int Size() { return content.Count; }
+        public int Size() { return content.Count; }
 
-        String GetName() { return name; }
+        public String GetName() { return name; }
 
-        int GetId() { return id; }
+        public int GetId() { return id; }
 
         void SetId(int newId) { id = newId; }
 
@@ -205,11 +205,11 @@ namespace Querying_semi_structured_data_cli {
             return output;
         }
 
-        Object Get(int row) {
+        public Object Get(int row) {
             return content[row];
         }
 
-        int FindRowByObject(Object o) {
+        public int FindRowByObject(Object o) {
             for (int i = 0; i < content.Count; i++) {
                 if (content[i].Equals(o)) {
                     return i;
@@ -218,17 +218,17 @@ namespace Querying_semi_structured_data_cli {
             return -1;
         }
 
-        HashSet<Object> GetContentAsSet() {
+        public HashSet<Object> GetContentAsSet() {
             return new HashSet<Object>((IEnumerable<object>)content);
         }
 
-        void Swap(int rowOne, int rowTwo) {
+        public void Swap(int rowOne, int rowTwo) {
             Object temp = content[rowOne];
             content[rowOne] = content[rowTwo];
             content[rowTwo] = temp;
         }
 
-        bool IsEmpty() {
+        public bool IsEmpty() {
             bool isEmpty = true;
             foreach (Object o in content) {
                 if (o != null) {
@@ -240,7 +240,7 @@ namespace Querying_semi_structured_data_cli {
             return isEmpty;
         }
 
-        bool CheckType(ParseColumn otherColumn) => sameType && otherColumn.sameType;
+        public bool CheckType(ParseColumn otherColumn) => sameType && otherColumn.sameType;
 
         public int[] CheckContent(ParseColumn otherColumn) {
             int[] results = new int[2];
